@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Observatório da Inclusão Escolar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #003366;
+            --accent-color: #d4a017;
+            --light-gray: #f2f2f2;
+            --text-dark: #1a1a1a;
+            --link-color: #0056b3;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            background-color: var(--light-gray);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--accent-color);
+        }
+
+        #saudacao {
+            font-size: 0.95rem;
+            color: var(--accent-color);
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        nav {
+            background-color: #002244;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 12px;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        section {
+            background: white;
+            padding: 25px;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--light-gray);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: var(--primary-color);
+            margin-top: 20px;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+        }
+
+        .lei-box {
+            background: #fff9e6;
+            border-left: 5px solid var(--accent-color);
+            padding: 15px;
+            margin: 15px 0;
+            font-style: italic;
+        }
+
+        .btn-filtro {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .btn-filtro:hover {
+            background: #004a99;
+        }
+
+        .news-item {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px dotted #ccc;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            text-transform: uppercase;
+        }
+
+        .news-link {
+            display: inline-block;
+            margin-top: 8px;
+            color: var(--link-color);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .news-link:hover {
+            text-decoration: underline;
+        }
+
+        #texto-dados {
+            margin-top: 12px;
+            color: #c0392b;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background: #000;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+            border-radius: 8px;
+        }
+
+        .carousel-legenda {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #555;
+            padding: 6px 0 0 0;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 51, 102, 0.75);
+            color: white;
+            border: none;
+            padding: 10px 14px;
+            cursor: pointer;
+            z-index: 10;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+
+        .carousel-btn:hover {
+            background: rgba(0, 51, 102, 1);
+        }
+
+        .prev { left: 8px; }
+        .next { right: 8px; }
+
+        .carousel-indicadores {
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        .carousel-indicadores span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ccc;
+            margin: 0 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .carousel-indicadores span.ativo {
+            background: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <p id="saudacao"></p>
+        <h1>Acessibilidade na Educação Brasileira</h1>
+        <p>Análise Técnica, Legislação e Realidade Prática</p>
+    </header>
+
+    <nav>
+        <a href="#conceito">O que é Inclusão</a>
+        <a href="#legislacao">Legislação</a>
+        <a href="#filtros">Barreiras</a>
+        <a href="#noticias">Notícias</a>
+    </nav>
+
+    <div class="container">
+        <div class="grid-layout">
+            <main>
+                  
+
+                <section id="carrossel">
+                    <h2>Imagens</h2>
+                    <div class="carousel-container">
+                        <div class="carousel-track" id="carouselTrack">
+                            <div class="carousel-slide">
+                                <img src="imagem1.jpg" alt="Aula de educação física inclusiva">
+                                <p class="carousel-legenda">Sala de aula inclusiva</p>
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="imagem2.jpg" alt="Professor auxiliando aluno com deficiência">
+                                <p class="carousel-legenda">Apoio pedagógico especializado</p>
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="imagem3.jpg" alt="Escola com rampas de acessibilidade">
+                                <p class="carousel-legenda">Acessibilidade estrutural nas escolas</p>
+                            </div>
+                        </div>
+                        <button class="carousel-btn prev" id="btnPrev" aria-label="Slide anterior">&#10094;</button>
+                        <button class="carousel-btn next" id="btnNext" aria-label="Próximo slide">&#10095;</button>
+                    </div>
+                    <div class="carousel-indicadores" id="indicadores"></div>
+                </section>
+
+                <section id="conceito">
+                    <h2>O que é Inclusão Escolar?</h2>
+                    <p>
+                        A <strong>inclusão escolar</strong> é um paradigma educacional que fundamenta-se no direito de todos os alunos de frequentarem a escola regular e participarem ativamente da vida acadêmica, independentemente de suas condições físicas, intelectuais ou sociais.
+                    </p>
+                    <h3>Por que ela é importante?</h3>
+                    <ul>
+                        <li><strong>Direito Fundamental:</strong> Garante a equidade e o cumprimento da dignidade da pessoa humana conforme a Constituição.</li>
+                        <li><strong>Valorização da Diversidade:</strong> O convívio com as diferenças prepara os estudantes para uma sociedade plural e empática.</li>
+                        <li><strong>Desenvolvimento Integral:</strong> Estimula o potencial cognitivo e social através da interação e da quebra de preconceitos.</li>
+                    </ul>
+                </section>
+
+                <section id="legislacao">
+                    <h2>Base Legal: Lei nº 13.146/2015</h2>
+                    <p>A Lei Brasileira de Inclusão (LBI) é o principal marco legal. Ela estabelece que a educação constitui direito fundamental da pessoa com deficiência.</p>
+                    <div class="lei-box">
+                        <strong>Artigo 28:</strong> Incumbe ao poder público assegurar, criar, desenvolver, implementar, incentivar, acompanhar e avaliar o sistema educacional inclusivo em todos os níveis.
+                    </div>
+                    <h3>Pontos Críticos da Lei:</h3>
+                    <ul>
+                        <li><strong>Proibição de taxas extras:</strong> Escolas particulares não podem cobrar valores adicionais para matricular alunos com deficiência.</li>
+                        <li><strong>Projeto Pedagógico:</strong> A escola deve oferecer planos de estudo individualizados (PEI) quando necessário.</li>
+                        <li><strong>Acessibilidade Digital:</strong> Sites de instituições de ensino devem ser acessíveis a cegos e surdos.</li>
+                    </ul>
+                    <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13146.htm" target="_blank" class="news-link">Consultar LBI Completa (Planalto)</a>
+                </section>
+
+                <section id="filtros">
+                    <h2>Barreiras à Inclusão</h2>
+                    <p>Selecione uma barreira para ver dados técnicos:</p>
+                    <div id="container-botoes"></div>
+                    <div id="resultado-filtro"></div>
+                </section>
+            </main>
+
+            <aside>
+                <section id="noticias">
+                    <h2>Exemplos e Notícias</h2>
+                    <div class="news-item">
+                        <span class="tag">Decisão Judicial</span>
+                        <h4>STF confirma obrigatoriedade de inclusão</h4>
+                        <p>O Supremo Tribunal Federal reafirmou que escolas privadas devem aceitar alunos com deficiência sem cobrança de taxas extras.</p>
+                        <a href="https://www.conjur.com.br/2016-jun-09/stf-confirma-lei-obriga-escolas-atender-alunos-deficiencia/" target="_blank" class="news-link">Ver no Consultor Jurídico</a>
+                    </div>
+
+                    <div class="news-item">
+                        <span class="tag">Política</span>
+                        <h4>MEC apresenta Rede Nacional de Educação Especial Inclusiva</h4>
+                        <p>Durante reunião com Undime, Consed e Consec nesta quinta-feira (30), pasta também divulgou avanços nessa modalidade de ensino, que teve aumento de 81% no número de matrículas em 2025, em relação a 2021.</p>
+                        <a href="https://www.gov.br/mec/pt-br/assuntos/noticias/2026/abril/mec-apresenta-rede-nacional-de-educacao-especial-inclusiva" target="_blank" class="news-link">Ver Dados do MEC</a>
+                    </div>
+
+                    <div class="news-item">
+                        <span class="tag">Pesquisas</span>
+                        <h4>Educação inclusiva no Brasil tem avanços lentos e desafios persistentes</h4>
+                        <p>Enquanto cresce o número de estudantes especiais nas escolas, a qualidade do ensino ainda é um desafio a ser vencido, segundo especialista.</p>
+                        <a href="https://jornal.usp.br/campus-ribeirao-preto/educacao-inclusiva-no-brasil-tem-avancos-lentos-e-desafios-persistentes/" target="_blank" class="news-link">Consultar no Jornal da USP</a>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Instituições especializadas</h2>
+                    <p>Acesse aqui:</p>
+                    <button class="btn-filtro" id="botao-dados">Carregar Dados</button>
+                    <div id="texto-dados"></div>
+                </section>
+            </aside>
+        </div>
+    </div>
+
+    <footer>
+       Curso Koletividade |  IFRJ. Maria Clara da Costa Gonçalves.
+    </footer>
+
+    <script>
+    
+        const hora = new Date().getHours();
+        let saudacaoTexto;
+
+        if (hora < 12) {
+            saudacaoTexto = "☀️ Bom dia!";
+        } else if (hora < 18) {
+            saudacaoTexto = "🌤️ Boa tarde!";
+        } else {
+            saudacaoTexto = "🌙 Boa noite!";
+        }
+
+        document.getElementById("saudacao").textContent = saudacaoTexto;
+
+        const categorias = [
+            { id: 'fisica',      label: 'Física' },
+            { id: 'comunicacao', label: 'Comunicação' },
+            { id: 'atitudinal',  label: 'Atitudinal' }
+        ];
+
+        const dados = {
+            'fisica':      "Segundo a pesquisa TIC Educação 2022, apenas 46% das escolas públicas brasileiras possuem acessibilidade constante em suas dependências, evidenciando uma lacuna significativa na inclusão de estudantes com deficiência ou mobilidade reduzida.",
+            'comunicacao': "A carência de intérpretes de Libras e materiais em Braille ainda atinge 60% das salas de recurso.",
+            'atitudinal':  "O bullying motivado por deficiência é uma das principais causas de evasão escolar no ensino médio."
+        };
+
+        const containerBotoes = document.getElementById('container-botoes');
+
+        for (let i = 0; i < categorias.length; i++) {
+            const cat = categorias[i];
+            const btn = document.createElement('button');
+            btn.textContent = cat.label;
+            btn.className = 'btn-filtro';
+            btn.id = 'btn-' + cat.id;
+            containerBotoes.appendChild(btn);
+
+        
+            btn.addEventListener('click', function () {
+                const display = document.getElementById('resultado-filtro');
+                display.innerHTML = `<p>📈 Dado Técnico: ${dados[cat.id]}</p>`;
+                display.style.color = "#c0392b";
+            });
+        }
+
+              const indicadores = [
+            "O Instituto Benjamin Constant (IBC), localizado na Urca, Rio de Janeiro (RJ), é uma autarquia federal e referência internacional na educação e reabilitação de pessoas cegas, com baixa visão ou surdocegas. Ele atua com ensino especializado, pesquisa, capacitação e oferece atendimento oftalmológico gratuito.",
+            "O Instituto Nacional de Educação de Surdos (INES) é a primeira escola para surdos do Brasil e atua como o Centro de Referência Nacional na Área da Surdez. Vinculado ao Ministério da Educação (MEC), o instituto fica localizado no bairro de Laranjeiras, no Rio de Janeiro. Ele subsidia a formulação de políticas públicas voltadas à comunidade surda em todo o território nacional."
+        ];
+
+        document.getElementById('botao-dados').addEventListener('click', function () {
+            const textoDados = document.getElementById('texto-dados');
+            textoDados.innerHTML = '';
+            let j = 0;
+        
+            while (j < indicadores.length) {
+                textoDados.innerHTML += `<p>• ${indicadores[j]}</p>`;
+                j++;
+            }
+        });
+
+           const track = document.getElementById('carouselTrack');
+        const slides = document.querySelectorAll('.carousel-slide');
+        const totalSlides = slides.length;
+        let slideAtual = 0;
+
+            const containerIndicadores = document.getElementById('indicadores');
+        for (let k = 0; k < totalSlides; k++) {
+            const bolinha = document.createElement('span');
+            if (k === 0) bolinha.classList.add('ativo');
+            containerIndicadores.appendChild(bolinha);
+
+            bolinha.addEventListener('click', function () {
+                irParaSlide(k);
+            });
+        }
+
+        function atualizarIndicadores() {
+            const bolinhas = document.querySelectorAll('.carousel-indicadores span');
+            bolinhas.forEach(function (b, idx) {
+                b.classList.toggle('ativo', idx === slideAtual);
+            });
+        }
+
+        function irParaSlide(indice) {
+            if (indice < 0) indice = totalSlides - 1;
+            if (indice >= totalSlides) indice = 0;
+            slideAtual = indice;
+            track.style.transform = `translateX(-${slideAtual * 100}%)`;
+            atualizarIndicadores();
+        }
+
+        document.getElementById('btnPrev').addEventListener('click', function () {
+            irParaSlide(slideAtual - 1);
+        });
+
+        document.getElementById('btnNext').addEventListener('click', function () {
+            irParaSlide(slideAtual + 1);
+        });
+
+       //para intevalo de tempo
+               setInterval(function () {
+            irParaSlide(slideAtual + 1);
+        }, 5000);
+    </script>
+
+</body>
+</html>
